@@ -1,7 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 var requests = require("requests");
-const port = process.env.PORT || 5000;
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 const homeFile = fs.readFileSync("home.html", "utf-8");
 
 const replaceVal = (tempVal, orgVal) => {
@@ -39,4 +39,6 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(port, "127.0.0.1");
+server.listen(port,() => {
+  console.log("app is listening")
+});
